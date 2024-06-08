@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Lego kids intro to Technology",
+    "content": "I am 4 years old and my dad got me a lego set for me to build with him and I am learning a lot from it. All while having fun.",
+    "userId": "3",
+    "username": "Julian23"
+  },
+  {
+      "title": "Making Youtube videos",
+      "content": "I utilize technology to make youtube videos. I enjoy fitness and technology allows me to make videos on that topic.",
+      "userId": "2",
+      "username": "Selina123"
+  },
+  {
+    "title": "Tech for coding",
+    "content": "Technology I use for my coding is a mac laptop, secondary screen, and different software to allow me to do my coding efficiently.",
+    "UserId": "1",
+    "username": "bren1023"
+  }
+]

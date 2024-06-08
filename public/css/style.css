@@ -1,0 +1,25 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.post {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.comments {
+  margin-top: 10px;
+  padding-left: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.comment {
+  margin-top: 5px;
+  padding: 5px 0;
+}

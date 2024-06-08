@@ -1,25 +1,31 @@
 const router = require('express').Router();
-const { Post } = require('../models');
+const { Post }  = require('../models/Post');
 
+// Route to create a new post
 router.post('/', async (req, res) => {
   try {
     const newPost = await Post.create({
-      ...req.body,
-      userId: req.session.userId
+      title: req.body.title,
+      content: req.body.content,
+      user_id: req.session.user_id,
     });
 
     res.status(200).json(newPost);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err);
   }
 });
+
+module.exports = router;
+
 
 router.delete('/:id', async (req, res) => {
   try {
     const postData = await Post.destroy({
       where: {
-        id: req.params.id,
-        userId: req.session.userId
+        title: req.body.title,
+        content: req.body.content,
+        user_id: req.session.user_id,
       }
     });
 
