@@ -17,7 +17,6 @@ app.set('view engine', 'handlebars');
 
 // Session configuration
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'defaultsecret', // Ensure the secret is set
   store: new SequelizeStore({ db: sequelize }),
   resave: false,
   saveUninitialized: false,
