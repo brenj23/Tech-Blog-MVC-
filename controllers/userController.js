@@ -32,6 +32,32 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Signup route
+router.post('/signup', async (req, res) => {
+  try {
+    console.log('Request body:', req.body);
+
+    const newUser = await User.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    console.log('New user created:', newUser);
+
+    req.session.save(() => {
+      req.session.user_id = newUser.id;
+      req.session.logged_in = true;
+
+      res.status(200).json(newUser);
+    });
+  } catch (err) {
+    console.error('Error signing up:', err);
+    res.status(500).json({ message: 'Internal Server Error', error: err });
+  }
+});
+
+
 // Logout route
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
@@ -42,5 +68,6 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
 
 module.exports = router;

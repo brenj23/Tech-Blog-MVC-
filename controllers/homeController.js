@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const { Post, User, Comment } = require('../models');
+const withAuth = require('../utils/auth');
 
+//Home route
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.findAll({
@@ -29,6 +31,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Login route
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {
     res.redirect('/');
@@ -38,8 +41,18 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+// Signup route
+router.get('/signup', (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect('/');
+    return;
+  }
+
+  res.render('signup');
+});
+
 // Profile route
-router.get('/profile', async (req, res) => {
+router.get('/profile', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },

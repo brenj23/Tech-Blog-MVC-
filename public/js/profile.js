@@ -1,59 +1,46 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+  console.log('DOMContentLoaded event fired');
+
   const newPostForm = document.getElementById('new-post-form');
+  console.log('newPostForm:', newPostForm);
 
-  if (newPostForm) {
-    newPostForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
+  const newFormHandler = async (event) => {
+    event.preventDefault();
 
-      const title = document.getElementById('title').value.trim();
-      const content = document.getElementById('content').value.trim();
+    const title = document.getElementById('title').value.trim();
+    const content = document.getElementById('content').value.trim();
 
-      if (title && content) {
-        try {
-          const response = await fetch('/api/posts', {
-            method: 'POST',
-            body: JSON.stringify({ title, content }),
-            headers: { 'Content-Type': 'application/json' },
-          });
+    console.log('Form Submitted:', { title, content });
 
-          if (response.ok) {
-            document.location.replace('/profile');
-          } else {
-            alert('Failed to create post.');
-          }
-        } catch (err) {
-          console.error('Error:', err);
+    if (title && content) {
+      try {
+        const response = await fetch('/api/posts', {
+          method: 'POST',
+          body: JSON.stringify({ title, content }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        console.log('Fetch response:', response);
+
+        if (response.ok) {
+          document.location.replace('/profile');
+        } else {
+          const errorMessage = await response.json();
+          console.error('Failed to create post:', errorMessage);
           alert('Failed to create post.');
         }
-      } else {
-        alert('Please fill out all fields.');
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Failed to create post.');
       }
-    });
-  }
-});
-
-  
-  const delButtonHandler = async (event) => {
-    if (event.target.hasAttribute('data-id')) {
-      const id = event.target.getAttribute('data-id');
-  
-      const response = await fetch(`/api/posts/${id}`, {
-        method: 'DELETE',
-      });
-  
-      if (response.ok) {
-        document.location.replace('/profile');
-      } else {
-        alert('Failed to delete post');
-      }
+    } else {
+      alert('Please fill out all fields.');
     }
   };
-  
-  document
-    .querySelector('.new-post-form')
-    .addEventListener('submit', newFormHandler);
-  
-  document
-    .querySelector('.post-list')
-    .addEventListener('click', delButtonHandler);
-  
+
+  if (newPostForm) {
+    newPostForm.addEventListener('submit', newFormHandler);
+  } else {
+    console.error('new-post-form not found in DOM');
+  }
+});
